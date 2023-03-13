@@ -1,0 +1,13 @@
+{
+  "[javascript]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    // "editor.suggest.insertMode": "replace"
+    "editor.defaultFormatter": "j69.ejs-beautify"
+  },
+  "emmet.includeLanguages": {
+    "ejs": "html"
+  }
+}
