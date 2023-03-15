@@ -16,10 +16,12 @@ app.use(express.urlencoded({ extended: false }));
 const mainRouter = require('./routes');
 const usersRouter = require('./routes/users');
 const boardRouter = require('./routes/board');
+const dbRouter = require('./routes/db');
 
 app.use('/', mainRouter);
 app.use('/users', usersRouter);
 app.use('/board', boardRouter);
+app.use('/db', dbRouter);
 
 app.use((err, req, res, next) => {
   console.log(err);
