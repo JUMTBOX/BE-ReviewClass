@@ -11,7 +11,7 @@ const boardDB = {
   },
   // 게시글 추가하기
   writeArticle: (newArticle, cb) => {
-    connection.query(`INSERT INTO mydb.board (TITLE, CONTENT) values ('${newArticle.title}', '${newArticle.content}');`, (err, data) => {
+    connection.query(`INSERT INTO mydb.board (TITLE, CONTENT, USERID) values ('${newArticle.title}', '${newArticle.content}, ${newArticle.userId}');`, (err, data) => {
       if (err) throw err;
       cb(data);
     });
@@ -26,7 +26,7 @@ const boardDB = {
   },
   // 특정 ID를 가지는 게시글을 수정하는 컨트롤러
   modifyArticle: (id, modifyArticle, cb) => {
-    connection.query(`UPDATE mydb.board SET TITLE = '${modifyArticle.title}', CONTENT = '${modifyArticle.content}' WHERE ID_PK= ${id};`, (err, data) => {
+    connection.query(`UPDATE mydb.board SET TITLE = '${modifyArticle.title}', CONTENT = '${modifyArticle.content}' WHERE ID_PK= ${id} `, (err, data) => {
       if (err) throw err;
       // console.log(data);
       cb(data);
