@@ -1,25 +1,28 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const uri = 'mongodb+srv://yjey12:ghdus220@cluster0.tgbblp4.mongodb.net/?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://yjey12:didghdus220@cluster0.fwyixrv.mongodb.net/?retryWrites=true&w=majority';
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
-  useUnifiedTopology: false,
+  useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
 client.connect((err) => {
-  const test = client.db('kdt5').collection('test');
-  console.log(test);
-  test.deleteMany({}, (deleteErr, deleteResult) => {
+  const collection = client.db('kdt5').collection('test');
+  console.log(collection);
+  collection.deleteMany({}, (deleteErr, deleteResult) => {
     if (deleteErr) throw deleteErr;
     console.log(deleteResult);
-    test.insertOne(
+    collection.insertOne(
       {
-        name: 'yang',
+        name: 'Yang',
         nickName: 'triangle',
       },
       (insertErr, insertResult) => {
         console.log(insertResult);
-        // client.close();
+        const findCursor = collection.find({});
+        findCursor.toArray((err, data) => {
+          console.log(data);
+        });
       },
     );
   });
