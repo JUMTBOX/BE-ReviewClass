@@ -3,19 +3,21 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+require('dotenv').config();
+
 const app = express();
-const PORT = 4000;
+const { PORT } = process.env;
 
 app.use(cors());
-app.use(cookieParser());
+app.use(cookieParser('0613'));
 app.use(
   session({
     secret: '0613',
     resave: false,
     saveUninitialized: true,
-    cookie: {
-      maxAge: 1000 * 60 * 60,
-    },
+    // cookie: {
+    //   maxAge: 1000 * 60 * 60,
+    // },
   }),
 );
 

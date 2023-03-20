@@ -11,7 +11,7 @@ const boardDB = {
   },
   // 게시글 추가하기
   writeArticle: (newArticle, cb) => {
-    connection.query(`INSERT INTO mydb.board (TITLE, CONTENT, USERID) values ('${newArticle.title}', '${newArticle.content}, ${newArticle.userId}');`, (err, data) => {
+    connection.query(`INSERT INTO mydb.board (TITLE, CONTENT, USERID) values ('${newArticle.title}', '${newArticle.content}', '${newArticle.userId}');`, (err, data) => {
       if (err) throw err;
       cb(data);
     });
