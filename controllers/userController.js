@@ -1,19 +1,28 @@
-const connection = require('./dbConnect');
+const MongoClient = require('./mongoConnect');
 
 const userDB = {
-  // 중복회원 찾기
-  userCheck: (userID, cb) => {
-    connection.query(`SELECT * FROM mydb.user WHERE USERID = '${userID}';`, (err, data) => {
-      if (err) throw err;
-      cb(data);
-    });
+  userCheck: async (userId) => {
+    try {
+      const client = await MongoClient.connect();
+      const user = client.db('kdt5').collection('user');
+      const findUser = user.findOne({ id: userId });
+      return findUser;
+    } catch (err) {
+      console.error(err);
+    }
+    return console.log('중복 유저체크 완료!');
   },
-  // 회원 가입하기
-  registerUser: (newUser, cb) => {
-    connection.query(`INSERT INTO mydb.user (USERID, PASSWORD) values ('${newUser.id}', '${newUser.password}');`, (err, data) => {
-      if (err) throw err;
-      cb(data);
-    });
+
+  registerUser: async (newUser) => {
+    try {
+      const client = await MongoClient.connect();
+      const user = client.db('kdt5').collection('user');
+      await user.insertOne(newUser);
+      return true;
+    } catch (err) {
+      console.error(err);
+    }
+    return console.log('회원가입 처리 완료!');
   },
 };
 
