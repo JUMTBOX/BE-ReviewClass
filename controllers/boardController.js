@@ -28,11 +28,15 @@ const addNewArticle = async (req, res) => {
   try {
     const client = await mongoClient.connect();
     const board = client.db('kdt5').collection('board');
+
+    console.log(req.file);
+
     const postArticle = await board.insertOne(
       {
         USERID: req.session.userId,
         TITLE: req.body.title,
         CONTENT: req.body.content,
+        IMAGE: req.file ? req.file.filename : null,
       },
     );
     if (!postArticle) return res.status(400).send('something went wrong!');
@@ -53,6 +57,7 @@ const toModifyPage = async (req, res) => {
     });
 
     res.render('db_board_modify', { selectedArticle });
+    console.log(selectedArticle.IMAGE);
   } catch (err) {
     console.error(err);
   }
@@ -63,12 +68,14 @@ const modifyArticle = async (req, res) => {
   try {
     const client = await mongoClient.connect();
     const board = client.db('kdt5').collection('board');
+    const image = await board.findOne({ _id: ObjectId(req.params.id) });
     await board.updateOne(
       { _id: { $eq: ObjectId(req.params.id) } },
       {
         $set: {
           TITLE: req.body.title,
           CONTENT: req.body.content,
+          IMAGE: req.file ? req.file.filename : image.IMAGE,
         },
       },
     );

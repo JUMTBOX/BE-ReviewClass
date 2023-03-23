@@ -22,7 +22,7 @@ Router.get('/', (req, res) => {
 });
 // 글 쓰기 모드로 이동
 Router.get('/write', (req, res) => {
-  res.render('board_write');
+  res.render('dbBoard_write');
 });
 // 글 추가 미들웨어
 Router.post('/write', (req, res) => {

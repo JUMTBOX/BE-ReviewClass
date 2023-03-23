@@ -1,11 +1,7 @@
-// const MongoClient = require('./mongoConnect');
-const mongooseConnect = require('./mongooseConnect');
-const User = require('../models/user');
-
-mongooseConnect();
+const MongoClient = require('./mongoConnect');
 
 const UNEXPECTED_MSG =
-  '알 수 없는 문제 발생! <br> <a href="/register">회원 가입으로 이동</a>';
+  '알 수 없는 문제 발생! <br> <a href="/register>회원 가입으로 이동</a>';
 
 const DUPLICATED_MSG =
   '동일한 ID를 가진 회원이 존재합니다! <br> <a href="/register">회원가입으로 이동</a>';
@@ -20,10 +16,12 @@ const IDFAIL_MSG =
 
 const registerUser = async (req, res) => {
   try {
-    const duplicatedUser = await User.findOne({ id: req.body.id });
+    const client = await MongoClient.connect();
+    const user = client.db('kdt5').collection('user');
+    const duplicatedUser = await user.findOne({ id: req.body.id });
     if (duplicatedUser) return res.status(400).res.send(DUPLICATED_MSG);
 
-    await User.create(req.body);
+    await user.insertOne(req.body);
     res.status(200).send(SUCCESS_MSG);
   } catch (err) {
     console.error(err);
@@ -33,7 +31,9 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const userLogin = await User.findOne({ id: req.body.id });
+    const client = await MongoClient.connect();
+    const user = client.db('kdt5').collection('user');
+    const userLogin = await user.findOne({ id: req.body.id });
 
     if (!userLogin) return res.status(400).send(IDFAIL_MSG);
 
