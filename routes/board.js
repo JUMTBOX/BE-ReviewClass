@@ -62,7 +62,7 @@ Router.post('/modify/:title', (req, res) => {
 Router.delete('/delete/:title', (req, res) => {
   const arrIndex = ARTICLE.findIndex((el) => el.title === req.params.title);
   ARTICLE.splice(arrIndex, 1);
-  res.send('삭제완료!');
+  res.send('삭제가 완료되었습니다!');
 });
 
 module.exports = Router;
